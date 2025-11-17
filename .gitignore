@@ -1,0 +1,8 @@
+# Node stuff
+node_modules/
+Backend/node_modules/
+
+# Env / secrets
+.env
+*.env
+Backend/server.env

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multi-AI Chat Dashboard</title>
+
+    <!-- Link your CSS -->
+    <link rel="stylesheet" href="query_front_page.css">
+</head>
+<body>
+
+    <header>
+        <h1>Welcome to the AI Display Page</h1>
+    </header>
+
+    <div id="layout">
+        <aside id="sidebar">
+            <h2>LLMs</h2>
+            <ul>
+                <li>FranWizard</li>
+                <li>GPT-5</li>
+                <li>Custom Model 1</li>
+                <li>Custom Model 2</li>
+            </ul>
+        </aside>
+
+        <main id="main-panel">
+            <p>Select a Model on the left to start chatting!</p>
+        </main>
+    </div>
+
+    <!-- Link your JS -->
+    <script src="query_front_page.js"></script>
+</body>
+</html>
+
+if (!conversations[modelName]) {
+    conversations[modelName] = [
+        { role: "system", content: `You are ${modelName}, a helpful assistant.` }
+    ];
+}
+
+const chatWindow = document.getElementById("chat-window");
+const chatForm = document.getElementById("chat-form");
+const chatInput = document.getElementById("chat-input");
+
+// Render existing messages if they exist
+renderConversation(chatWindow, conversations[modelName]);
+
+chatForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const text = chatInput.value.trim();
+    if (!text) return;
+
+    const convo = conversations[modelName];
+
+    // Add user message
+    convo.push({ role: "user", content: text });
+    renderConversation(chatWindow, convo);
+    chatInput.value = "";
+    chatInput.focus();
+
+    try {
+        const response = await fetch("http://localhost:3000/api/chat/gpt5", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ modelName, messages: convo })
+        });
+
+        const data = await response.json();
+
+        if (data.reply) {
+            convo.push(data.reply);
+            renderConversation(chatWindow, convo);
+        } else if (data.error) {
+            convo.push({ role: "assistant", content: `Error: ${data.error}` });
+            renderConversation(chatWindow, convo);
+        }
+
+    } catch (err) {
+        console.error(err);
+        convo.push({
+            role: "assistant",
+            content: "Error: Could not reach backend."
+        });
+        renderConversation(chatWindow, convo);
+    }
+});
