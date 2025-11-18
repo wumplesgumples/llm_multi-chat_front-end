@@ -1,4 +1,5 @@
 const conversations = {};
+const API_BASE = "https://llm-multi-chat-front-end.onrender.com";
 console.log("Multi-AI Chat Dashboard loaded.");
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -71,8 +72,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 try {
                     const endpoint =
                         modelName === "Quote Calculator"
-                            ? "http://localhost:3000/api/chat/quote"
-                            : "http://localhost:3000/api/chat/gpt5";
+                            ? `${API_BASE}/api/chat/quote`
+                            : `${API_BASE}/api/chat/gpt5`;
 
                     const response = await fetch(endpoint, {
                         method: "POST",
