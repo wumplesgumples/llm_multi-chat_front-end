@@ -37,6 +37,11 @@ header {
     background: #444;
 }
 
+#sidebar li.active {
+    background: #555;
+    font-weight: bold;
+}
+
 #main-panel {
     flex: 1;
     padding: 20px;
@@ -44,12 +49,75 @@ header {
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    text-align: center;
+    text-align: left;
 }
 
-#sidebar li.active {
-    background: #555;
+/* Chat UI styles */
+
+.chat-header {
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 10px;
+}
+
+.chat-header h2 {
+    margin: 0;
+}
+
+.chat-window {
+    width: 100%;
+    max-width: 800px;
+    height: 400px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    background: #fafafa;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+.chat-form {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    max-width: 800px;
+}
+
+.chat-form input {
+    flex: 1;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.chat-form button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
     font-weight: bold;
+}
+
+.chat-message {
+    margin-bottom: 8px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    max-width: 75%;
+    word-wrap: break-word;
+    font-size: 14px;
+}
+
+.chat-message.user {
+    margin-left: auto;
+    background: #d1e7ff;
+    text-align: right;
+}
+
+.chat-message.assistant {
+    margin-right: auto;
+    background: #f1f1f1;
+    text-align: left;
 }
