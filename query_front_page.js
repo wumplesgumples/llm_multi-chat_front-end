@@ -5,12 +5,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const items = document.querySelectorAll("#sidebar li");
     const main = document.getElementById("main-panel");
 
-    items.forEach(item => {
+    items.forEach((item) => {
         item.addEventListener("click", () => {
             const modelName = item.textContent.trim();
 
-            items.forEach(i => i.classList.remove("active"));
+            items.forEach((i) => i.classList.remove("active"));
             item.classList.add("active");
+
+            if (modelName === "FranWizard") {
+                main.innerHTML = `
+                    <div class="chat-header">
+                        <h2>FranWizard</h2>
+                    </div>
+                    <p>
+                        FranWizard isn't wired to a backend yet.<br>
+                        For now, use <strong>GPT-5</strong> for general chat,
+                        <strong>Quote Calculator</strong> for on-the-spot cleaning quotes,
+                        or <strong>Custom Model 2</strong> for experiments.
+                    </p>
+                `;
+                return;
+            }
 
             main.innerHTML = `
                 <div class="chat-header">
@@ -31,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (!conversations[modelName]) {
                 conversations[modelName] = [
-                    { role: "system", content: `You are ${modelName}, a helpful assistant.` }
+                    { role: "system", content: `You are ${modelName}, a helpful assistant.` },
                 ];
             }
 
@@ -54,29 +69,39 @@ document.addEventListener("DOMContentLoaded", () => {
                 chatInput.focus();
 
                 try {
-                    const response = await fetch("http://localhost:3000/api/chat/gpt5", {
+                    const endpoint =
+                        modelName === "Quote Calculator"
+                            ? "http://localhost:3000/api/chat/quote"
+                            : "http://localhost:3000/api/chat/gpt5";
+
+                    const response = await fetch(endpoint, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ messages: convo })
+                        body: JSON.stringify({ messages: convo }),
                     });
 
                     const data = await response.json();
 
                     if (data.reply) {
                         convo.push(data.reply);
-                        renderConversation(chatWindow, convo);
                     } else if (data.error) {
                         convo.push({
                             role: "assistant",
-                            content: `Error: ${data.error}`
+                            content: `Error: ${data.error}`,
                         });
-                        renderConversation(chatWindow, convo);
+                    } else {
+                        convo.push({
+                            role: "assistant",
+                            content: "No reply received from server.",
+                        });
                     }
+
+                    renderConversation(chatWindow, convo);
                 } catch (err) {
                     console.error(err);
                     convo.push({
                         role: "assistant",
-                        content: "Error: Could not reach backend."
+                        content: "Error: Could not reach backend.",
                     });
                     renderConversation(chatWindow, convo);
                 }
@@ -88,8 +113,8 @@ document.addEventListener("DOMContentLoaded", () => {
 function renderConversation(container, messages) {
     container.innerHTML = "";
     messages
-        .filter(m => m.role !== "system")
-        .forEach(m => {
+        .filter((m) => m.role !== "system")
+        .forEach((m) => {
             const div = document.createElement("div");
             div.classList.add(
                 "chat-message",
