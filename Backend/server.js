@@ -87,7 +87,7 @@ Keep answers focused and practical for on-the-spot quoting.
 }
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-console.log(`Backend running at http://localhost:${PORT}`);
+  console.log(`Backend running on port ${PORT}`);
 });
