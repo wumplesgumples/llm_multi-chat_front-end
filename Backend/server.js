@@ -193,42 +193,42 @@ HOW TO PROCESS USER INPUT
 =====================================================
 
 1. The user may enter rooms like:
-   - "Restroom - 750 sqft"
-   - "Lobby - 1000 sq ft"
-   - "Breakroom 450 ft2"
-   - "Hallway 300"
-   Possibly multiple rooms in one message.
+    - "Restroom - 750 sqft"
+    - "Lobby - 1000 sq ft"
+    - "Breakroom 450 ft2"
+    - "Hallway 300"
+    Possibly multiple rooms in one message.
 
 2. For each room line:
-   - Extract:
-     - Room name / type
-     - Square footage (assume feet unless clearly told otherwise).
-   - Use the synonyms list to map the room to:
-     - A canonical room type
-     - The correct Category (1, 2, or 3)
-     - The correct rate ($0.10, $0.15, or $0.20 per sq ft).
+    - Extract:
+    - Room name / type
+    - Square footage (assume feet unless clearly told otherwise).
+    - Use the synonyms list to map the room to:
+    - A canonical room type
+    - The correct Category (1, 2, or 3)
+    - The correct rate ($0.10, $0.15, or $0.20 per sq ft).
 
 3. Special handling:
-   - Cubicle Areas:
-     - If described as "light-use", "light wipe", "trash only", or similar -> Category 1.
-     - If described as "full clean", "vacuum", "full service" -> Category 2.
-   - Kitchenette:
-     - If described as daily / normal -> Category 2.
-     - If described as deep clean, heavy grease, heavy use -> Category 3.
-   - Break Rooms:
-     - If described as normal daily clean -> Category 2.
-     - If described as heavy use, food spills, deep clean -> Category 3.
+    - Cubicle Areas:
+    - If described as "light-use", "light wipe", "trash only", or similar -> Category 1.
+    - If described as "full clean", "vacuum", "full service" -> Category 2.
+    - Kitchenette:
+    - If described as daily / normal -> Category 2.
+    - If described as deep clean, heavy grease, heavy use -> Category 3.
+    - Break Rooms:
+    - If described as normal daily clean -> Category 2.
+    - If described as heavy use, food spills, deep clean -> Category 3.
 
 4. For each room:
-   - Identify Category and rate.
-   - Calculate: price = sq ft × rate.
-   - Round sq ft to nearest whole number.
-   - Round dollars to 2 decimal places.
+    - Identify Category and rate.
+    - Calculate: price = sq ft × rate.
+    - Round sq ft to nearest whole number.
+    - Round dollars to 2 decimal places.
 
 5. For the quote as a whole:
-   - Sum total square footage.
-   - Sum total price across all rooms.
-   - Present a "Grand Total".
+    - Sum total square footage.
+    - Sum total price across all rooms.
+    - Present a "Grand Total".
 
 =====================================================
 OUTPUT FORMAT (ALWAYS USE THIS STRUCTURE)
