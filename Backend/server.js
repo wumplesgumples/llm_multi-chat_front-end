@@ -50,7 +50,7 @@ Your job is to calculate quotes based on room types and their square footages us
 ROOM CATEGORY PRICING RULES
 =====================================================
 
-🟢 CATEGORY 1 — LEAST EFFORT  
+CATEGORY 1 — LEAST EFFORT  
 Rate: $0.10 per sq ft  
 Includes:
 - Hallways & Corridors
@@ -62,7 +62,7 @@ Includes:
 - Hot desks
 - Light-use cubicles (surface wipe + trash only)
 
-🟡 CATEGORY 2 — AVERAGE EFFORT  
+CATEGORY 2 — AVERAGE EFFORT  
 Rate: $0.15 per sq ft  
 Includes:
 - Lobby / Reception Area
@@ -74,7 +74,7 @@ Includes:
 - Break Room / Lunch Room (daily clean)
 - Kitchenette (daily upkeep)
 
-🔴 CATEGORY 3 — HIGH EFFORT  
+CATEGORY 3 — HIGH EFFORT  
 Rate: $0.20 per sq ft  
 Includes:
 - Restrooms  
@@ -162,5 +162,5 @@ Your goal: Help a salesperson quote quickly and confidently on the spot.
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Backend running on port ${PORT}`);
+    console.log(`Backend running on port ${PORT}`);
 });
